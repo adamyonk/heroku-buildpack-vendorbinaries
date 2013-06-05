@@ -24,7 +24,7 @@ done < .heroku_binaries
 cd $1
 if [ -s $1/.bundle_heroku/config ]; then
   echo "-----> Hacking .bundle/config"
-  rm -f $CACHE_DIR/.bundle
-  cp -v -R $BUILD_DIR/.bundle_heroku $BUILD_DIR/.bundle
-  sed -i "s,/app,$BUILD_DIR,g" $BUILD_DIR/.bundle/config
+  #rm -f $CACHE_DIR/.bundle
+  cp -v -R .bundle_heroku .bundle
+  sed -i "s,/app,$BUILD_DIR,g" .bundle/config
 fi

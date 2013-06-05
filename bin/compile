@@ -16,6 +16,7 @@ fi
 cd $1
 
 while read url; do
-  echo Vendoring $url to $PWD | indent
-  curl -L --silent $url | tar xz
+  echo Vendoring $url | indent
+  cd $1/vendor
+  curl -L $url -s -o - | tar xzf -
 done < .vendor_urls

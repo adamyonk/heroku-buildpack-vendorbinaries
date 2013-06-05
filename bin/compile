@@ -4,6 +4,8 @@ indent() {
   sed -u 's/^/       /'
 }
 
+cd $1
+
 if [ ! -s $1/.heroku_binaries ]; then
   echo ".heroku_binaries empty. Skipping." | indent
   exit 0
@@ -11,11 +13,11 @@ fi
 
 # Download binaries
 echo "-----> Downloading dependencies"
-cd $1/vendor
 while read binary; do
   echo Downloading $binary | indent
-  ls -al
+  cd $1/vendor
   curl -L https://s3.amazonaws.com/adamyonk-heroku-binaries/$binary.tar.gz -s -o - | tar xzf -
+  cd $1
 done < .heroku_binaries
 
 # Hack .bundle/config

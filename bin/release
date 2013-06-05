@@ -2,4 +2,4 @@
 
 echo "---"
 echo "config_vars:"
-echo "  PATH: $PATH:"
+echo "  PATH: $PATH:/app/vendor/taglib-1.8/bin"

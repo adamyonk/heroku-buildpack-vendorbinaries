@@ -22,7 +22,7 @@ done < .heroku_binaries
 
 # Hack .bundle/config
 cd $1
-if [ ! -s $1/.bundle_heroku/config ]; then
+if [ -s $1/.bundle_heroku/config ]; then
   echo "-----> Hacking .bundle/config"
   rm -f $CACHE_DIR/.bundle
   cp -v -R $BUILD_DIR/.bundle_heroku $BUILD_DIR/.bundle

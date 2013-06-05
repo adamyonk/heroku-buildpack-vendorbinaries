@@ -1,22 +1,12 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 
 indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Found a .vendor_urls file"
+echo "-----> Installing dependencies"
 
-# Bail early but noisily
-if [ ! -s $1/.vendor_urls ]; then
-  echo ".vendor_urls empty. Skipping." | indent
-  exit 0
-fi
+cd $1/vendor
 
-cd $1
-
-while read url; do
-  echo Vendoring $url | indent
-  cd $1/vendor
-  curl -L $url -s -o - | tar xzf -
-done < .vendor_urls
+echo Downloading taglib | indent
+curl -L https://s3.amazonaws.com/adamyonk-heroku-binaries/taglib-1.8.tar.gz -s -o - | tar xzf -

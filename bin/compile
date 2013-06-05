@@ -4,10 +4,25 @@ indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Installing dependencies"
+if [ ! -s $1/.heroku_binaries ]; then
+  echo ".heroku_binaries empty. Skipping." | indent
+  exit 0
+fi
 
+# Download binaries
+echo "-----> Downloading dependencies"
 cd $1/vendor
+while read binary; do
+  echo Downloading $binary | indent
+  ls -al
+  curl -L https://s3.amazonaws.com/adamyonk-heroku-binaries/$binary.tar.gz -s -o - | tar xzf -
+done < .heroku_binaries
 
-echo Downloading taglib | indent
-ls -al
-curl -L https://s3.amazonaws.com/adamyonk-heroku-binaries/taglib-1.8.tar.gz -s -o - | tar xzf -
+# Hack .bundle/config
+cd $1
+if [ ! -s $1/.bundle_heroku/config ]; then
+  echo "-----> Hacking .bundle/config"
+  rm -f $CACHE_DIR/.bundle
+  cp -v -R $BUILD_DIR/.bundle_heroku $BUILD_DIR/.bundle
+  sed -i "s,/app,$BUILD_DIR,g" $BUILD_DIR/.bundle/config
+fi

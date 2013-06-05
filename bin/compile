@@ -9,5 +9,5 @@ echo "-----> Installing dependencies"
 cd $1/vendor
 
 echo Downloading taglib | indent
-bundle config --local build.taglib-ruby '--with-opt-dir=/app/vendor/taglib'
+ls -al
 curl -L https://s3.amazonaws.com/adamyonk-heroku-binaries/taglib-1.8.tar.gz -s -o - | tar xzf -
